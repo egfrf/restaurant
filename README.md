@@ -14,3 +14,5 @@
 
 ## 🥗 STYLISH & CLEAR MENU VIEW
 ![Project Image](img/sever.png)
+
+##🏪 Ready-to-use application for restaurant owners
