@@ -58,8 +58,7 @@ ScreenManager:
                     MDChipLeadingIcon:
                         icon: 'hamburger'
                         color: 'orange'
-                        
-                        
+        
                 MDChip:
                     text: 'Drinks'
                     type: 'input'
@@ -69,9 +68,7 @@ ScreenManager:
                     MDChipLeadingIcon:
                         icon: 'glass-fragile'
                         color: 'blue'
-                        
-                        
-                            
+             
                 MDChip:
                     text: 'Cake'
                     type: 'input'
@@ -90,8 +87,7 @@ ScreenManager:
                     MDChipLeadingIcon:
                         icon: 'food-turkey'
                         color: 'darkorange'
-                        
-        
+
                 
         MDTextField:
             id: text_shert
@@ -101,10 +97,7 @@ ScreenManager:
             size: 300, 100
             pos_hint: {'x': 0.1}
             on_text_validate: app.shert(self.text)
-            
-            
-        
-                                
+                      
         ScrollView:     
             id: list_contenyr    
                  
@@ -133,9 +126,6 @@ ScreenManager:
         theme_icon_color: 'Custom'
         icon_color: 1, 0.5, 0, 1
         on_press: root.goto_scr_main()
-            
-        
-        
 
     MDChip:
         pos_hint: {'center_x': 0.5, 'center_y': 0.85}
@@ -147,15 +137,7 @@ ScreenManager:
         MDChipLeadingIcon:
             icon: 'cart'
             color: 'red'
-            
-      
-  
-    
-                    
-                    
-                
-                
-    
+
 
 ''')
 
@@ -209,10 +191,7 @@ class Ham(MDScreen):
     def open_list(self, category):
         
         self.ids.list_contenyr.clear_widgets()
-        
- 
-           
-           
+   
         scrool=ScrollView()
         list=MDList() 
             
@@ -222,26 +201,16 @@ class Ham(MDScreen):
             item=(TwoLineIconListItem(text=f'      {i['name']}', secondary_text=f'      $ {i['price']}' 
             , secondary_theme_text_color='Custom',secondary_text_color=(0, 0.392, 0 ,1),
                   on_release=lambda x, p=i: self.item_clicked(p)))
-            
-            
-            
+
             
             item.add_widget((IconLeftWidget(icon=i['icon'],icon_size='60sp')))
             
             list.add_widget(item)
-      
-            
-            
+    
         self.ids.list_contenyr.add_widget(scrool)
-        
 
-           
         return user_window       
            
-           
-        
-# عند الضغط اعلى list
-
     def item_clicked(self, i):
         
         layout=RelativeLayout(size_hint_y=None, height=250)
@@ -302,21 +271,16 @@ class Ham(MDScreen):
             'price': item['price'],
             'qty': self.qty_button.text,
             'tabl': self.text_fild.text,
-     
-            
+
         })
          
         table_none=self.text_fild.text.strip() # اد مدخل ليس فارغ
-        
-        
-        
-   
+
         if table_none: #حققstrip True  اد مدخل متروس يعني  
             self.manager.current='Addwid'
             self.dialog.dismiss()
             self.butmin.disabled=False 
-
-                
+              
         else:    
             self.butmin.disabled=True
             self.label_eroor.text='Eroor\nEnter your numbre Table'
@@ -327,11 +291,7 @@ class Ham(MDScreen):
             
         else:
             self.butmin.disabled=True       
-            
-    
-      
-      
-             
+
 class Addwid(MDScreen):
     def goto_scr_main(self):
         self.manager.current='Ham'
@@ -355,27 +315,23 @@ class Addwid(MDScreen):
             with open('menu.text','a') as name:
                 
                 name.write(f'{item['name']}, {item['qty']}, {item['price']},{item['icon']}\n')
-                
-                
+   
         carrent.add_widget(scrol)  
      
     def of_dialog(self, instance):
         self.dealog.dismiss()
         
-    def delet_req(self, instance): # اد مخزن item يتبق داخلها مخزون كل الطلبات ادخل في cart_items امسح منها الي سويت اضافه عليها
-
-#                  مخزن item يعني تمرير الزر  يتطبق مع مخزن الاضافانت
+    def delet_req(self, instance):
+#                 
         if self.item_to_delete in cart_items:
             cart_items.remove(self.item_to_delete)
             
             self.dealog.dismiss()
-            self.open_list_add() # اعاده تشغيل رسم القائمه  
+            self.open_list_add() #  
             
             with open('menu.text','a') as name:
                 name.write(f'{self.item_to_delete['name']}, {self.item_to_delete['qty']}, {self.item_to_delete['price']},{self.item_to_delete['icon']}\n')
-
-        
-               
+    
     def open_dealog(self, item):
         layoutdi=RelativeLayout()
         img=IconLeftWidget(icon=item['icon'], icon_size='40sp')
@@ -393,25 +349,16 @@ class Addwid(MDScreen):
         self.dealog.open()      
             
         self.item_to_delete= item    
-            
-           
-
-
-
 
 class Main(MDApp):
     def build(self):
    
         return Builder.load_string(KV)
-           
-       
-
     def shert(self, text):
         
         screen=self.root.get_screen('Ham')
         screen.ids.list_contenyr.clear_widgets()
-        
-        
+
         listn=MDList() 
         found=False
         
@@ -429,13 +376,7 @@ class Main(MDApp):
             screen.ids.text_shert.error=False
         else:
             screen.ids.text_shert.error=True
-       
-           
-                 
-           
+
         return None
-            
-   
-        
 
 Main().run()
